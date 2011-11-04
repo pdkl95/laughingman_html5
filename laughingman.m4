@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
 <title>LaughingMan</title>
-<link  rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans:bold:latin">
+<meta charset='utf=8'>
+<meta name='author' content='Brent Sanders'>
+<meta name='copyright' content='Brent Sanders 2011'>
+<!-- The Laughing Man logo itself it copyright
+     Kenji Kamihama and Production I.G. / Bandai.
+     My use of it here without permission is intended as
+     nothing more than thanks making such a wonderful show!
+-->
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans:bold:latin">
 <script type="text/javascript">
 m4_include(main.js)
 </script>
