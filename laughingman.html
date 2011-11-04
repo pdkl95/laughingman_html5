@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LaughingMan</title>
+<meta charset='utf=8'>
+<meta name='author' content='Brent Sanders'>
+<meta name='copyright' content='Brent Sanders 2011'>
+<!-- The Laughing Man logo itself it copyright
+     Kenji Kamihama and Production I.G. / Bandai.
+     My use of it here without permission is intended as
+     nothing more than thanks making such a wonderful show!
+-->
+<script type="text/javascript">
+var LaughingMan, setup;
+LaughingMan = (function() {
+  LaughingMan.prototype.cap = {
+    outside: 65,
+    inside: 30,
+    x_left: -200,
+    x_right: 310
+  };
+  LaughingMan.prototype.eye = function(e) {
+    this.c.beginPath();
+    this.c.arc(e.x, e.y, e.r, 3 * Math.PI / 2 - e.t, 3 * Math.PI / 2 + e.t, false);
+    this.c.arc(e.x, e.y + 26, e.r + 10, Math.PI / 2 - e.t, Math.PI / 2 + e.t, true);
+    return this.c.fill();
+  };
+  LaughingMan.prototype.draw_face = function() {
+    var e, x;
+    this.cap.width = this.cap.x_right - this.cap.x_left;
+    this.cap.height = this.cap.outside - this.cap.inside;
+    this.c.translate(400, 400);
+    this.c.beginPath();
+    this.c.fillStyle = "#064D76";
+    this.c.strokeStyle = "#064D76";
+    this.c.arc(0, 0, 312, 0, this.TWOPI, false);
+    this.c.arc(0, 0, 296, 0, this.TWOPI, true);
+    this.c.arc(0, 0, 238, 0, this.TWOPI, false);
+    this.c.arc(0, 0, 202, 0, this.TWOPI, true);
+    this.c.moveTo(0, this.cap.inside);
+    x = Math.PI / 19;
+    this.c.arc(0, 0, 180, x, Math.PI - x, false);
+    this.c.moveTo(0, this.cap.outside);
+    x = x * 2.8;
+    this.c.arc(0, 0, 145, Math.PI - x, x, true);
+    this.c.fill();
+    this.c.beginPath();
+    this.c.arc(this.cap.x_right, 0, 65, 0, this.TWOPI, false);
+    this.c.fillRect(this.cap.x_right - 100, this.cap.inside, 100, this.cap.height);
+    this.c.fillRect(this.cap.x_left, 0 - this.cap.outside, this.cap.width, this.cap.height);
+    this.c.fill();
+    e = {
+      x: 95,
+      y: 30,
+      r: 50,
+      t: Math.PI / 2.2
+    };
+    this.eye(e);
+    e.x = -1 * e.x;
+    this.eye(e);
+    this.c.beginPath();
+    this.c.fillStyle = "#FFFFFF";
+    this.c.arc(this.cap.x_right, 0, this.cap.inside, 0, this.TWOPI, true);
+    this.c.fillRect(this.cap.x_right - 110, 0 - this.cap.inside, 110, 2 * this.cap.inside);
+    this.c.fillRect(-170, 22, 2 * 170, this.cap.inside - 22);
+    return this.c.fill();
+  };
+  function LaughingMan() {
+    this.TWOPI = 2 * Math.PI;
+    this.fps = 30;
+    this.theta = 0.021;
+    this.el = document.getElementById("warped");
+    this.canvas = document.getElementById("overlay");
+    this.c = this.canvas.getContext("2d");
+    this.draw_face();
+  }
+  return LaughingMan;
+})();
+setup = function() {
+  return window.laughing_man = new LaughingMan;
+};
+</script>
+<style type="text/css">
+body {
+  overflow: hidden;
+}
+
+#overlay {
+  overflow: hidden;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+#warped {
+  position: relative;
+  display: block;
+  width: 1078px;
+  height: 902px;
+  color: #064d76;
+  overflow: hidden;
+  -moz-transform-origin: 400px 400px;
+  -moz-animation: spin 12s infinite linear;
+  -webkit-animation: spin 12s infinite linear;
+}
+
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+#warped > span[class^=w]:nth-of-type(n+0) {
+  display: block;
+  position: absolute;
+  -moz-transform-origin: 50% 100%;
+}
+
+#warped span {
+  font-family: Impact,sans-serif;
+  font-size: 48px;
+  font-weight: bold;
+  font-style: normal;
+  line-height: 0.6;
+  white-space: pre;
+  overflow: visible;
+  padding: 0px;
+  top: 400px;
+  left: 400px;
+}
+
+#warped .w0 {
+  -moz-transform: translate(249.41px, -22.51px) rotate(1.59rad);
+  -webkit-transform: translate(249.41px, -22.51px) rotate(1.59rad);
+  -o-transform: translate(249.41px, -22.51px) rotate(1.59rad);
+  transform: translate(249.41px, -22.51px) rotate(1.59rad);
+}
+#warped .w2 {
+  -moz-transform: translate(244.58px, 9.55px) rotate(1.72rad);
+  -webkit-transform: translate(244.58px, 9.55px) rotate(1.72rad);
+  -o-transform: translate(244.58px, 9.55px) rotate(1.72rad);
+  transform: translate(244.58px, 9.55px) rotate(1.72rad);
+}
+#warped .w3 {
+  -moz-transform: translate(235.33px, 33.17px) rotate(1.81rad);
+  -webkit-transform: translate(235.33px, 33.17px) rotate(1.81rad);
+  -o-transform: translate(235.33px, 33.17px) rotate(1.81rad);
+  transform: translate(235.33px, 33.17px) rotate(1.81rad);
+}
+#warped .w4 {
+  -moz-transform: translate(226.85px, 60.47px) rotate(1.92rad);
+  -webkit-transform: translate(226.85px, 60.47px) rotate(1.92rad);
+  -o-transform: translate(226.85px, 60.47px) rotate(1.92rad);
+  transform: translate(226.85px, 60.47px) rotate(1.92rad);
+}
+#warped .w5 {
+  -moz-transform: translate(215.38px, 86.65px) rotate(2.03rad);
+  -webkit-transform: translate(215.38px, 86.65px) rotate(2.03rad);
+  -o-transform: translate(215.38px, 86.65px) rotate(2.03rad);
+  transform: translate(215.38px, 86.65px) rotate(2.03rad);
+}
+#warped .w6 {
+  -moz-transform: translate(201.84px, 110.97px) rotate(2.14rad);
+  -webkit-transform: translate(201.84px, 110.97px) rotate(2.14rad);
+  -o-transform: translate(201.84px, 110.97px) rotate(2.14rad);
+  transform: translate(201.84px, 110.97px) rotate(2.14rad);
+}
+#warped .w7 {
+  -moz-transform: translate(184.71px, 133.61px) rotate(2.25rad);
+  -webkit-transform: translate(184.71px, 133.61px) rotate(2.25rad);
+  -o-transform: translate(184.71px, 133.61px) rotate(2.25rad);
+  transform: translate(184.71px, 133.61px) rotate(2.25rad);
+}
+#warped .w8 {
+  -moz-transform: translate(173.05px, 151.47px) rotate(2.35rad);
+  -webkit-transform: translate(173.05px, 151.47px) rotate(2.35rad);
+  -o-transform: translate(173.05px, 151.47px) rotate(2.35rad);
+  transform: translate(173.05px, 151.47px) rotate(2.35rad);
+}
+#warped .w10 {
+  -moz-transform: translate(131.16px, 179.4px) rotate(2.52rad);
+  -webkit-transform: translate(131.16px, 179.4px) rotate(2.52rad);
+  -o-transform: translate(131.16px, 179.4px) rotate(2.52rad);
+  transform: translate(131.16px, 179.4px) rotate(2.52rad);
+}
+#warped .w11 {
+  -moz-transform: translate(107.55px, 196.83px) rotate(2.65rad);
+  -webkit-transform: translate(107.55px, 196.83px) rotate(2.65rad);
+  -o-transform: translate(107.55px, 196.83px) rotate(2.65rad);
+  transform: translate(107.55px, 196.83px) rotate(2.65rad);
+}
+#warped .w12 {
+  -moz-transform: translate(83.55px, 208.49px) rotate(2.75rad);
+  -webkit-transform: translate(83.55px, 208.49px) rotate(2.75rad);
+  -o-transform: translate(83.55px, 208.49px) rotate(2.75rad);
+  transform: translate(83.55px, 208.49px) rotate(2.75rad);
+}
+#warped .w13 {
+  -moz-transform: translate(65.26px, 216.14px) rotate(2.84rad);
+  -webkit-transform: translate(65.26px, 216.14px) rotate(2.84rad);
+  -o-transform: translate(65.26px, 216.14px) rotate(2.84rad);
+  transform: translate(65.26px, 216.14px) rotate(2.84rad);
+}
+#warped .w15 {
+  -moz-transform: translate(35.92px, 223.45px) rotate(2.97rad);
+  -webkit-transform: translate(35.92px, 223.45px) rotate(2.97rad);
+  -o-transform: translate(35.92px, 223.45px) rotate(2.97rad);
+  transform: translate(35.92px, 223.45px) rotate(2.97rad);
+}
+#warped .w16 {
+  -moz-transform: translate(21.47px, 225.52px) rotate(3.03rad);
+  -webkit-transform: translate(21.47px, 225.52px) rotate(3.03rad);
+  -o-transform: translate(21.47px, 225.52px) rotate(3.03rad);
+  transform: translate(21.47px, 225.52px) rotate(3.03rad);
+}
+#warped .w17 {
+  -moz-transform: translate(-7.08px, 226.93px) rotate(3.11rad);
+  -webkit-transform: translate(-7.08px, 226.93px) rotate(3.11rad);
+  -o-transform: translate(-7.08px, 226.93px) rotate(3.11rad);
+  transform: translate(-7.08px, 226.93px) rotate(3.11rad);
+}
+#warped .w19 {
+  -moz-transform: translate(-50.15px, 224.29px) rotate(3.28rad);
+  -webkit-transform: translate(-50.15px, 224.29px) rotate(3.28rad);
+  -o-transform: translate(-50.15px, 224.29px) rotate(3.28rad);
+  transform: translate(-50.15px, 224.29px) rotate(3.28rad);
+}
+#warped .w20 {
+  -moz-transform: translate(-78.16px, 218.57px) rotate(3.39rad);
+  -webkit-transform: translate(-78.16px, 218.57px) rotate(3.39rad);
+  -o-transform: translate(-78.16px, 218.57px) rotate(3.39rad);
+  transform: translate(-78.16px, 218.57px) rotate(3.39rad);
+}
+#warped .w22 {
+  -moz-transform: translate(-127.38px, 202.21px) rotate(3.58rad);
+  -webkit-transform: translate(-127.38px, 202.21px) rotate(3.58rad);
+  -o-transform: translate(-127.38px, 202.21px) rotate(3.58rad);
+  transform: translate(-127.38px, 202.21px) rotate(3.58rad);
+}
+#warped .w23 {
+  -moz-transform: translate(-149.94px, 186.65px) rotate(3.71rad);
+  -webkit-transform: translate(-149.94px, 186.65px) rotate(3.71rad);
+  -o-transform: translate(-149.94px, 186.65px) rotate(3.71rad);
+  transform: translate(-149.94px, 186.65px) rotate(3.71rad);
+}
+#warped .w24 {
+  -moz-transform: translate(-168px, 172.42px) rotate(3.8rad);
+  -webkit-transform: translate(-168px, 172.42px) rotate(3.8rad);
+  -o-transform: translate(-168px, 172.42px) rotate(3.8rad);
+  transform: translate(-168px, 172.42px) rotate(3.8rad);
+}
+#warped .w26 {
+  -moz-transform: translate(-189.57px, 149.94px) rotate(3.93rad);
+  -webkit-transform: translate(-189.57px, 149.94px) rotate(3.93rad);
+  -o-transform: translate(-189.57px, 149.94px) rotate(3.93rad);
+  transform: translate(-189.57px, 149.94px) rotate(3.93rad);
+}
+#warped .w27 {
+  -moz-transform: translate(-199.3px, 138.84px) rotate(3.99rad);
+  -webkit-transform: translate(-199.3px, 138.84px) rotate(3.99rad);
+  -o-transform: translate(-199.3px, 138.84px) rotate(3.99rad);
+  transform: translate(-199.3px, 138.84px) rotate(3.99rad);
+}
+#warped .w28 {
+  -moz-transform: translate(-219.76px, 121.95px) rotate(4.08rad);
+  -webkit-transform: translate(-219.76px, 121.95px) rotate(4.08rad);
+  -o-transform: translate(-219.76px, 121.95px) rotate(4.08rad);
+  transform: translate(-219.76px, 121.95px) rotate(4.08rad);
+}
+#warped .w30 {
+  -moz-transform: translate(-242.18px, 85.08px) rotate(4.25rad);
+  -webkit-transform: translate(-242.18px, 85.08px) rotate(4.25rad);
+  -o-transform: translate(-242.18px, 85.08px) rotate(4.25rad);
+  transform: translate(-242.18px, 85.08px) rotate(4.25rad);
+}
+#warped .w31 {
+  -moz-transform: translate(-247.39px, 63.03px) rotate(4.34rad);
+  -webkit-transform: translate(-247.39px, 63.03px) rotate(4.34rad);
+  -o-transform: translate(-247.39px, 63.03px) rotate(4.34rad);
+  transform: translate(-247.39px, 63.03px) rotate(4.34rad);
+}
+#warped .w32 {
+  -moz-transform: translate(-258.21px, 41.13px) rotate(4.43rad);
+  -webkit-transform: translate(-258.21px, 41.13px) rotate(4.43rad);
+  -o-transform: translate(-258.21px, 41.13px) rotate(4.43rad);
+  transform: translate(-258.21px, 41.13px) rotate(4.43rad);
+}
+#warped .w33 {
+  -moz-transform: translate(-260.03px, 18.66px) rotate(4.52rad);
+  -webkit-transform: translate(-260.03px, 18.66px) rotate(4.52rad);
+  -o-transform: translate(-260.03px, 18.66px) rotate(4.52rad);
+  transform: translate(-260.03px, 18.66px) rotate(4.52rad);
+}
+#warped .w34 {
+  -moz-transform: translate(-266.8px, -4.2px) rotate(4.61rad);
+  -webkit-transform: translate(-266.8px, -4.2px) rotate(4.61rad);
+  -o-transform: translate(-266.8px, -4.2px) rotate(4.61rad);
+  transform: translate(-266.8px, -4.2px) rotate(4.61rad);
+}
+#warped .w35 {
+  -moz-transform: translate(-268.99px, -31.76px) rotate(4.72rad);
+  -webkit-transform: translate(-268.99px, -31.76px) rotate(4.72rad);
+  -o-transform: translate(-268.99px, -31.76px) rotate(4.72rad);
+  transform: translate(-268.99px, -31.76px) rotate(4.72rad);
+}
+#warped .w36 {
+  -moz-transform: translate(-267.09px, -60.28px) rotate(4.83rad);
+  -webkit-transform: translate(-267.09px, -60.28px) rotate(4.83rad);
+  -o-transform: translate(-267.09px, -60.28px) rotate(4.83rad);
+  transform: translate(-267.09px, -60.28px) rotate(4.83rad);
+}
+#warped .w38 {
+  -moz-transform: translate(-253.51px, -96.26px) rotate(4.97rad);
+  -webkit-transform: translate(-253.51px, -96.26px) rotate(4.97rad);
+  -o-transform: translate(-253.51px, -96.26px) rotate(4.97rad);
+  transform: translate(-253.51px, -96.26px) rotate(4.97rad);
+}
+#warped .w40 {
+  -moz-transform: translate(-250.54px, -134.97px) rotate(5.13rad);
+  -webkit-transform: translate(-250.54px, -134.97px) rotate(5.13rad);
+  -o-transform: translate(-250.54px, -134.97px) rotate(5.13rad);
+  transform: translate(-250.54px, -134.97px) rotate(5.13rad);
+}
+#warped .w41 {
+  -moz-transform: translate(-229.96px, -163.28px) rotate(5.26rad);
+  -webkit-transform: translate(-229.96px, -163.28px) rotate(5.26rad);
+  -o-transform: translate(-229.96px, -163.28px) rotate(5.26rad);
+  transform: translate(-229.96px, -163.28px) rotate(5.26rad);
+}
+#warped .w42 {
+  -moz-transform: translate(-214.07px, -183.58px) rotate(5.36rad);
+  -webkit-transform: translate(-214.07px, -183.58px) rotate(5.36rad);
+  -o-transform: translate(-214.07px, -183.58px) rotate(5.36rad);
+  transform: translate(-214.07px, -183.58px) rotate(5.36rad);
+}
+#warped .w44 {
+  -moz-transform: translate(-190.39px, -213.59px) rotate(5.51rad);
+  -webkit-transform: translate(-190.39px, -213.59px) rotate(5.51rad);
+  -o-transform: translate(-190.39px, -213.59px) rotate(5.51rad);
+  transform: translate(-190.39px, -213.59px) rotate(5.51rad);
+}
+#warped .w45 {
+  -moz-transform: translate(-168.71px, -232.21px) rotate(5.62rad);
+  -webkit-transform: translate(-168.71px, -232.21px) rotate(5.62rad);
+  -o-transform: translate(-168.71px, -232.21px) rotate(5.62rad);
+  transform: translate(-168.71px, -232.21px) rotate(5.62rad);
+}
+#warped .w46 {
+  -moz-transform: translate(-144.94px, -247.79px) rotate(5.73rad);
+  -webkit-transform: translate(-144.94px, -247.79px) rotate(5.73rad);
+  -o-transform: translate(-144.94px, -247.79px) rotate(5.73rad);
+  transform: translate(-144.94px, -247.79px) rotate(5.73rad);
+}
+#warped .w48 {
+  -moz-transform: translate(-108.23px, -266.63px) rotate(5.9rad);
+  -webkit-transform: translate(-108.23px, -266.63px) rotate(5.9rad);
+  -o-transform: translate(-108.23px, -266.63px) rotate(5.9rad);
+  transform: translate(-108.23px, -266.63px) rotate(5.9rad);
+}
+#warped .w49 {
+  -moz-transform: translate(-80.93px, -274.25px) rotate(5.99rad);
+  -webkit-transform: translate(-80.93px, -274.25px) rotate(5.99rad);
+  -o-transform: translate(-80.93px, -274.25px) rotate(5.99rad);
+  transform: translate(-80.93px, -274.25px) rotate(5.99rad);
+}
+#warped .w51 {
+  -moz-transform: translate(-49.6px, -281.69px) rotate(6.12rad);
+  -webkit-transform: translate(-49.6px, -281.69px) rotate(6.12rad);
+  -o-transform: translate(-49.6px, -281.69px) rotate(6.12rad);
+  transform: translate(-49.6px, -281.69px) rotate(6.12rad);
+}
+#warped .w52 {
+  -moz-transform: translate(-30.16px, -284.43px) rotate(6.21rad);
+  -webkit-transform: translate(-30.16px, -284.43px) rotate(6.21rad);
+  -o-transform: translate(-30.16px, -284.43px) rotate(6.21rad);
+  transform: translate(-30.16px, -284.43px) rotate(6.21rad);
+}
+#warped .w53 {
+  -moz-transform: translate(-1.58px, -284.75px) rotate(6.32rad);
+  -webkit-transform: translate(-1.58px, -284.75px) rotate(6.32rad);
+  -o-transform: translate(-1.58px, -284.75px) rotate(6.32rad);
+  transform: translate(-1.58px, -284.75px) rotate(6.32rad);
+}
+#warped .w54 {
+  -moz-transform: translate(26.89px, -282.33px) rotate(6.42rad);
+  -webkit-transform: translate(26.89px, -282.33px) rotate(6.42rad);
+  -o-transform: translate(26.89px, -282.33px) rotate(6.42rad);
+  transform: translate(26.89px, -282.33px) rotate(6.42rad);
+}
+#warped .w55 {
+  -moz-transform: translate(49.03px, -277.62px) rotate(6.52rad);
+  -webkit-transform: translate(49.03px, -277.62px) rotate(6.52rad);
+  -o-transform: translate(49.03px, -277.62px) rotate(6.52rad);
+  transform: translate(49.03px, -277.62px) rotate(6.52rad);
+}
+#warped .w57 {
+  -moz-transform: translate(88px, -264.24px) rotate(6.68rad);
+  -webkit-transform: translate(88px, -264.24px) rotate(6.68rad);
+  -o-transform: translate(88px, -264.24px) rotate(6.68rad);
+  transform: translate(88px, -264.24px) rotate(6.68rad);
+}
+#warped .w58 {
+  -moz-transform: translate(113.73px, -252px) rotate(6.79rad);
+  -webkit-transform: translate(113.73px, -252px) rotate(6.79rad);
+  -o-transform: translate(113.73px, -252px) rotate(6.79rad);
+  transform: translate(113.73px, -252px) rotate(6.79rad);
+}
+#warped .w59 {
+  -moz-transform: translate(136.18px, -237.76px) rotate(6.9rad);
+  -webkit-transform: translate(136.18px, -237.76px) rotate(6.9rad);
+  -o-transform: translate(136.18px, -237.76px) rotate(6.9rad);
+  transform: translate(136.18px, -237.76px) rotate(6.9rad);
+}
+#warped .w60 {
+  -moz-transform: translate(158.12px, -224.21px) rotate(6.98rad);
+  -webkit-transform: translate(158.12px, -224.21px) rotate(6.98rad);
+  -o-transform: translate(158.12px, -224.21px) rotate(6.98rad);
+  transform: translate(158.12px, -224.21px) rotate(6.98rad);
+}
+#warped .w61 {
+  -moz-transform: translate(170.86px, -211.67px) rotate(7.05rad);
+  -webkit-transform: translate(170.86px, -211.67px) rotate(7.05rad);
+  -o-transform: translate(170.86px, -211.67px) rotate(7.05rad);
+  transform: translate(170.86px, -211.67px) rotate(7.05rad);
+}
+#warped .w62 {
+  -moz-transform: translate(180.36px, -188.98px) rotate(7.17rad);
+  -webkit-transform: translate(180.36px, -188.98px) rotate(7.17rad);
+  -o-transform: translate(180.36px, -188.98px) rotate(7.17rad);
+  transform: translate(180.36px, -188.98px) rotate(7.17rad);
+}
+#warped .w63 {
+  -moz-transform: translate(206.85px, -160.16px) rotate(7.31rad);
+  -webkit-transform: translate(206.85px, -160.16px) rotate(7.31rad);
+  -o-transform: translate(206.85px, -160.16px) rotate(7.31rad);
+  transform: translate(206.85px, -160.16px) rotate(7.31rad);
+}
+#warped .w64 {
+  -moz-transform: translate(222.7px, -138.91px) rotate(7.41rad);
+  -webkit-transform: translate(222.7px, -138.91px) rotate(7.41rad);
+  -o-transform: translate(222.7px, -138.91px) rotate(7.41rad);
+  transform: translate(222.7px, -138.91px) rotate(7.41rad);
+}
+#warped .w65 {
+  -moz-transform: translate(228.17px, -117.63px) rotate(7.5rad);
+  -webkit-transform: translate(228.17px, -117.63px) rotate(7.5rad);
+  -o-transform: translate(228.17px, -117.63px) rotate(7.5rad);
+  transform: translate(228.17px, -117.63px) rotate(7.5rad);
+}
+#warped .w66 {
+  -moz-transform: translate(237.56px, -94.18px) rotate(7.59rad);
+  -webkit-transform: translate(237.56px, -94.18px) rotate(7.59rad);
+  -o-transform: translate(237.56px, -94.18px) rotate(7.59rad);
+  transform: translate(237.56px, -94.18px) rotate(7.59rad);
+}
+
+</style>
+</head>
+<body onload="setup();">
+  <div id='warped'>
+	<span class='w0'>I</span>
+    <span class='w2'>t</span>
+    <span class='w3'>h</span>
+    <span class='w4'>o</span>
+    <span class='w5'>u</span>
+    <span class='w6'>g</span>
+    <span class='w7'>h</span>
+    <span class='w8'>t</span>
+    <span class='w10'>w</span>
+    <span class='w11'>h</span>
+    <span class='w12'>a</span>
+    <span class='w13'>t</span>
+    <span class='w15'>I</span>
+    <span class='w16'>'</span>
+    <span class='w17'>d</span>
+    <span class='w19'>d</span>
+    <span class='w20'>o</span>
+    <span class='w22'>w</span>
+    <span class='w23'>a</span>
+    <span class='w24'>s</span>
+    <span class='w26'>I</span>
+    <span class='w27'>'</span>
+    <span class='w28'>d</span>
+    <span class='w30'>p</span>
+    <span class='w31'>r</span>
+    <span class='w32'>e</span>
+    <span class='w33'>t</span>
+    <span class='w34'>e</span>
+    <span class='w35'>n</span>
+    <span class='w36'>d</span>
+    <span class='w38'>I</span>
+    <span class='w40'>w</span>
+    <span class='w41'>a</span>
+    <span class='w42'>s</span>
+    <span class='w44'>o</span>
+    <span class='w45'>n</span>
+    <span class='w46'>e</span>
+    <span class='w48'>o</span>
+    <span class='w49'>f</span>
+    <span class='w51'>t</span>
+    <span class='w52'>h</span>
+    <span class='w53'>o</span>
+    <span class='w54'>s</span>
+    <span class='w55'>e</span>
+    <span class='w57'>d</span>
+    <span class='w58'>e</span>
+    <span class='w59'>a</span>
+    <span class='w60'>f</span>
+    <span class='w61'>-</span>
+    <span class='w62'>m</span>
+    <span class='w63'>u</span>
+    <span class='w64'>t</span>
+    <span class='w65'>e</span>
+    <span class='w66'>s</span>
+  </div>
+  <canvas id="overlay" width=800 height=800></canvas>
+</body>
+
+</html>
