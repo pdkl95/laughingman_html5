@@ -5,18 +5,22 @@ class LaughingMan
     x_left:  -200
     x_right: 310
 
+  draw_background: ->
+    @b.translate 400, 400
+    @b.beginPath()
+    @b.fillStyle = "#FFFFFF"
+    @b.arc 0, 0, 310, 0, @TWOPI, false
+    @b.fill()
+
   eye: (e) ->
     @c.beginPath()
     @c.arc e.x, e.y, e.r, 3 * Math.PI / 2 - e.t,  3 * Math.PI / 2 + e.t, false
     @c.arc e.x, e.y + 26, e.r + 10, Math.PI / 2 - e.t, Math.PI / 2 + e.t, true
     @c.fill()
 
-
   draw_face: ->
-    @cap.width  = @cap.x_right - @cap.x_left
-    @cap.height = @cap.outside - @cap.inside
-
     @c.translate 400, 400
+
     @c.beginPath()
     @c.fillStyle = "#064D76"
     @c.strokeStyle = "#064D76"
@@ -40,6 +44,10 @@ class LaughingMan
     @c.fillRect @cap.x_left, 0 - @cap.outside, @cap.width, @cap.height
     @c.fill()
 
+    @c.beginPath()
+    @c.fillRect -16, -244, 34, 8
+    @c.fill()
+
     e =
      x: 95
      y: 30
@@ -61,10 +69,17 @@ class LaughingMan
     @TWOPI  = 2 * Math.PI
     @fps    = 30
     @theta  = 0.021
+
+    @cap.width  = @cap.x_right - @cap.x_left
+    @cap.height = @cap.outside - @cap.inside
+
     @el     = document.getElementById("warped")
     @canvas = document.getElementById("overlay")
+    @bgnd   = document.getElementById("overlay_background")
     @c      = @canvas.getContext("2d")
+    @b      = @bgnd.getContext("2d")
 
+    @draw_background()
     @draw_face()
 
 

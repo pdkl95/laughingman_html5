@@ -1,8 +1,17 @@
 body {
   overflow: hidden;
+  background-color: #aaa;
+}
+
+#overlay_background {
+  z-index: -1;
 }
 
 #overlay {
+  z-index: 1;
+}
+
+#overlay, #overlay_background {
   overflow: hidden;
   position: absolute;
   top: 8px;
