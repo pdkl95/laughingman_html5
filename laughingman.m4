@@ -10,7 +10,6 @@
      My use of it here without permission is intended as
      nothing more than thanks making such a wonderful show!
 -->
-<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans:bold:latin">
 <script type="text/javascript">
 m4_include(main.js)
 </script>
