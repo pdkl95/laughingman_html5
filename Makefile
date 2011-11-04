@@ -1,23 +1,47 @@
+TARGET      = laughingman.html
+INSTALL_DIR = /home/endymion/static/html/
 
+SRC    = laughingman.m4
+JSOBJ  = main.js
+CSSOBJ = style.css
 
-laughingman.html: laughingman.m4 main.js style.css
-	m4 -P laughingman.m4 > laughingman.html
+FLAG_COFFEE = --bare
+FLAG_SCSS   = --unix-newlines --force --style=expanded --no-cache
+FLAG_M4     = -P
 
-main.js: main.coffee
-	coffee --bare -c main.coffee
+COFFEE  = coffee
+SCSS    = scss
+M4      = m4 -P
+INSTALL = install -c -m 644
 
-style.css: style.scss
-	scss --unix-newlines --force --style=expanded --no-cache style.scss style.css
+all: rebuild
+.PHONY: rebuild clean install
+
+### Depends
+
+$(TARGET): $(SRC) $(JSOBJ) $(CSSOBJ)
+
+### Rules
+
+%.html: %.m4
+	$(M4) $(FLAG_M4) $< > $@
+
+%.js: %.coffee
+	$(COFFEE) $(FLAG_COFFEE) -c $<
+
+%.css: %.scss
+	$(SCSS) $(FLAG_SCSS) $< $@
+
+### Housekeeping
 
 clean:
-	rm -f laughingman.html
-	rm -f main.js
-	rm -f style.css
+	rm -f $(TARGET) $(JSOBJ) $(CSSOBJ)
 
-install: laughingman.html
-	cp laughingman.html /home/endymion/static/html/
+install: $(TARGET)
+	$(INSTALL) $(TARGET) $(INSTALL_DIR)
 
-
-remake:
+rebuild:
 	make clean
 	make install
+
+
