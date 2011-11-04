@@ -57,23 +57,16 @@ class LaughingMan
     @c.fillRect -170, 22, 2 * 170, @cap.inside - 22
     @c.fill()
 
-  animate: =>
-    @r = @r + @theta
-    @el.style.MozTransform = "rotate(#{@r}rad)"
-    setTimeout @animate, @period
-
   constructor: ->
     @TWOPI  = 2 * Math.PI
     @fps    = 30
     @theta  = 0.021
-    @r      = 0
-    @period = 1000 / @fps
     @el     = document.getElementById("warped")
     @canvas = document.getElementById("overlay")
     @c      = @canvas.getContext("2d")
 
     @draw_face()
-    @animate()
+
 
 setup = ->
   window.laughing_man = new LaughingMan

@@ -1,5 +1,4 @@
 var LaughingMan, setup;
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 LaughingMan = (function() {
   LaughingMan.prototype.cap = {
     outside: 65,
@@ -53,22 +52,14 @@ LaughingMan = (function() {
     this.c.fillRect(-170, 22, 2 * 170, this.cap.inside - 22);
     return this.c.fill();
   };
-  LaughingMan.prototype.animate = function() {
-    this.r = this.r + this.theta;
-    this.el.style.MozTransform = "rotate(" + this.r + "rad)";
-    return setTimeout(this.animate, this.period);
-  };
   function LaughingMan() {
-    this.animate = __bind(this.animate, this);;    this.TWOPI = 2 * Math.PI;
+    this.TWOPI = 2 * Math.PI;
     this.fps = 30;
     this.theta = 0.021;
-    this.r = 0;
-    this.period = 1000 / this.fps;
     this.el = document.getElementById("warped");
     this.canvas = document.getElementById("overlay");
     this.c = this.canvas.getContext("2d");
     this.draw_face();
-    this.animate();
   }
   return LaughingMan;
 })();
