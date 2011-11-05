@@ -1,4 +1,4 @@
-var LaughingMan, setup;
+var LaughingMan, setup_laughingman;
 LaughingMan = (function() {
   LaughingMan.prototype.cap = {
     outside: 65,
@@ -7,6 +7,7 @@ LaughingMan = (function() {
     x_right: 310
   };
   LaughingMan.prototype.draw_background = function() {
+    console.log(this.b);
     this.b.translate(400, 400);
     this.b.beginPath();
     this.b.fillStyle = "#FFFFFF";
@@ -21,6 +22,7 @@ LaughingMan = (function() {
   };
   LaughingMan.prototype.draw_face = function() {
     var e, x;
+    console.log(this.c);
     this.c.translate(400, 400);
     this.c.beginPath();
     this.c.fillStyle = "#064D76";
@@ -60,22 +62,72 @@ LaughingMan = (function() {
     this.c.fillRect(-170, 22, 2 * 170, this.cap.inside - 22);
     return this.c.fill();
   };
-  function LaughingMan() {
+  LaughingMan.prototype.setup = function() {
     this.TWOPI = 2 * Math.PI;
     this.fps = 30;
     this.theta = 0.021;
     this.cap.width = this.cap.x_right - this.cap.x_left;
-    this.cap.height = this.cap.outside - this.cap.inside;
-    this.el = document.getElementById("warped");
-    this.canvas = document.getElementById("overlay");
-    this.bgnd = document.getElementById("overlay_background");
-    this.c = this.canvas.getContext("2d");
-    this.b = this.bgnd.getContext("2d");
+    return this.cap.height = this.cap.outside - this.cap.inside;
+  };
+  LaughingMan.prototype.setup_canvas = function(canvas) {
+    canvas.width = 800;
+    canvas.height = 800;
+    return canvas.getContext("2d");
+  };
+  LaughingMan.prototype.build_letterspan = function(wrap, char, idx) {
+    var el;
+    el = document.createElement("span");
+    el.classList.add("w" + idx);
+    el.textContent = char;
+    wrap.appendChild(el);
+    return el;
+  };
+  LaughingMan.prototype.setup_textwrap = function(wrap) {
+    var char, idx, txt, _len, _ref;
+    txt = "I thought what I'd do was I'd pretend I was one of those deaf-mutes";
+    _ref = txt.split('');
+    for (idx = 0, _len = _ref.length; idx < _len; idx++) {
+      char = _ref[idx];
+      this.build_letterspan(wrap, char, idx);
+    }
+    return wrap;
+  };
+  LaughingMan.prototype.build_element = function(setup, tag, klass) {
+    var el;
+    el = this.top.getElementsByClassName(klass)[0];
+    if (el == null) {
+      el = document.createElement(tag);
+      el.classList.add("lm_" + klass);
+      this.top.appendChild(el);
+    }
+    return this["setup_" + setup](el);
+  };
+  LaughingMan.prototype.build = function(top) {
+    this.top = top;
+    this.b = this.build_element('canvas', 'canvas', 'background');
+    this.el = this.build_element('textwrap', 'div', 'txtwrap');
+    return this.c = this.build_element('canvas', 'canvas', 'foreground');
+  };
+  function LaughingMan(top) {
+    this.setup();
+    this.build(top);
     this.draw_background();
     this.draw_face();
   }
   return LaughingMan;
 })();
-setup = function() {
-  return window.laughing_man = new LaughingMan;
+setup_laughingman = function() {
+  var el, _i, _len, _ref, _results;
+  _ref = document.getElementsByClassName('laughingman');
+  _results = [];
+  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+    el = _ref[_i];
+    _results.push(new LaughingMan(el));
+  }
+  return _results;
 };
+if (window.addEventListener) {
+  window.addEventListener('load', setup_laughingman, false);
+} else {
+  window.alert('missing: window.addEventListener');
+}

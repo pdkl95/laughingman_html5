@@ -6,6 +6,7 @@ class LaughingMan
     x_right: 310
 
   draw_background: ->
+    console.log @b
     @b.translate 400, 400
     @b.beginPath()
     @b.fillStyle = "#FFFFFF"
@@ -19,6 +20,7 @@ class LaughingMan
     @c.fill()
 
   draw_face: ->
+    console.log @c
     @c.translate 400, 400
 
     @c.beginPath()
@@ -65,23 +67,59 @@ class LaughingMan
     @c.fillRect -170, 22, 2 * 170, @cap.inside - 22
     @c.fill()
 
-  constructor: ->
-    @TWOPI  = 2 * Math.PI
-    @fps    = 30
-    @theta  = 0.021
+  setup: ->
+    @TWOPI = 2 * Math.PI
+    @fps   = 30
+    @theta = 0.021
 
     @cap.width  = @cap.x_right - @cap.x_left
     @cap.height = @cap.outside - @cap.inside
 
-    @el     = document.getElementById("warped")
-    @canvas = document.getElementById("overlay")
-    @bgnd   = document.getElementById("overlay_background")
-    @c      = @canvas.getContext("2d")
-    @b      = @bgnd.getContext("2d")
+  setup_canvas: (canvas)->
+    canvas.width  = 800
+    canvas.height = 800
+    canvas.getContext "2d"
 
+  build_letterspan: (wrap, char, idx)->
+    el = document.createElement "span"
+    el.classList.add "w#{idx}"
+    el.textContent = char
+    wrap.appendChild el
+    el
+
+  setup_textwrap: (wrap)->
+    txt = "I thought what I'd do was I'd pretend I was one of those deaf-mutes"
+    for char, idx in txt.split ''
+      @build_letterspan wrap, char, idx
+    wrap
+
+  build_element: (setup, tag, klass)->
+    el = @top.getElementsByClassName(klass)[0]
+    unless el?
+      el = document.createElement tag
+      el.classList.add "lm_#{klass}"
+      @top.appendChild el
+    this["setup_#{setup}"] el
+
+  build: (top)->
+    @top = top
+
+    @b  = @build_element 'canvas', 'canvas', 'background'
+    @el = @build_element 'textwrap',  'div', 'txtwrap'
+    @c  = @build_element 'canvas', 'canvas', 'foreground'
+
+  constructor: (top)->
+    @setup()
+    @build top
     @draw_background()
     @draw_face()
 
 
-setup = ->
-  window.laughing_man = new LaughingMan
+setup_laughingman = ->
+  for el in document.getElementsByClassName('laughingman')
+    new LaughingMan el
+
+if window.addEventListener
+  window.addEventListener 'load', setup_laughingman, false
+else
+  window.alert 'missing: window.addEventListener'

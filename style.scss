@@ -3,22 +3,22 @@ body {
   background-color: #aaa;
 }
 
-#overlay_background {
+.lm_background {
   z-index: -1;
 }
 
-#overlay {
+.lm_foreground {
   z-index: 1;
 }
 
-#overlay, #overlay_background {
+.lm_foreground, .lm_background {
   overflow: hidden;
   position: absolute;
   top:  8px;
   left: 8px;
 }
 
-#warped {
+.lm_txtwrap {
   position: relative;
   display: block;
   width: 1078px;
@@ -36,13 +36,13 @@ body {
 }
 
 
-#warped > span[class^=w]:nth-of-type(n+0) {
+.lm_txtwrap > span[class^=w]:nth-of-type(n+0) {
   display: block;
   position: absolute;
   -moz-transform-origin: 50% 100%;
 }
 
-#warped span {
+.lm_txtwrap span {
   font-family: Impact,sans-serif;
     font-size:   48px;
   font-weight: bold;
@@ -61,7 +61,7 @@ body {
   }
 }
 
-#warped {
+.lm_txtwrap {
   .w0  { @include lmtr( 249.41px,  -22.51px, 1.59rad); }  // I
   .w2  { @include lmtr( 244.58px,   09.55px, 1.72rad); }  // t
   .w3  { @include lmtr( 235.33px,   33.17px, 1.81rad); }  // h
