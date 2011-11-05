@@ -121,6 +121,13 @@ LaughingMan = (function() {
     this.el = this.build_element('textwrap', 'div', 'txtwrap');
     return this.c = this.build_element('canvas', 'canvas', 'foreground');
   };
+  LaughingMan.prototype.move = function(x, y, r) {
+    var w;
+    this.top.style.left = x;
+    this.top.style.top = y;
+    w = r * 2;
+    return w;
+  };
   function LaughingMan(top) {
     this.setup();
     this.build(top);

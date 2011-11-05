@@ -108,6 +108,12 @@ class LaughingMan
     @el = @build_element 'textwrap',  'div', 'txtwrap'
     @c  = @build_element 'canvas', 'canvas', 'foreground'
 
+  move: (x, y, r)->
+    @top.style.left = x
+    @top.style.top  = y
+    w = r * 2
+    w
+
   constructor: (top)->
     @setup()
     @build top
@@ -123,3 +129,11 @@ if window.addEventListener
   window.addEventListener 'load', setup_laughingman, false
 else
   window.alert 'missing: window.addEventListener'
+
+
+
+
+# Local Variables:
+# pdkl-recompile-on-save: "make rebuild --no-print-directory"
+# pdkl-load-in-firefox-on-save: "laughingman.html"
+# End:
