@@ -1,11 +1,14 @@
 var LaughingMan, setup_laughingman;
+
 LaughingMan = (function() {
+
   LaughingMan.prototype.cap = {
     outside: 65,
     inside: 30,
     x_left: -200,
     x_right: 310
   };
+
   LaughingMan.prototype.draw_background = function() {
     console.log(this.b);
     this.b.translate(400, 400);
@@ -14,12 +17,14 @@ LaughingMan = (function() {
     this.b.arc(0, 0, 310, 0, this.TWOPI, false);
     return this.b.fill();
   };
+
   LaughingMan.prototype.eye = function(e) {
     this.c.beginPath();
     this.c.arc(e.x, e.y, e.r, 3 * Math.PI / 2 - e.t, 3 * Math.PI / 2 + e.t, false);
     this.c.arc(e.x, e.y + 26, e.r + 10, Math.PI / 2 - e.t, Math.PI / 2 + e.t, true);
     return this.c.fill();
   };
+
   LaughingMan.prototype.draw_face = function() {
     var e, x;
     console.log(this.c);
@@ -62,6 +67,7 @@ LaughingMan = (function() {
     this.c.fillRect(-170, 22, 2 * 170, this.cap.inside - 22);
     return this.c.fill();
   };
+
   LaughingMan.prototype.setup = function() {
     this.TWOPI = 2 * Math.PI;
     this.fps = 30;
@@ -69,19 +75,37 @@ LaughingMan = (function() {
     this.cap.width = this.cap.x_right - this.cap.x_left;
     return this.cap.height = this.cap.outside - this.cap.inside;
   };
+
   LaughingMan.prototype.setup_canvas = function(canvas) {
     canvas.width = 800;
     canvas.height = 800;
     return canvas.getContext("2d");
   };
-  LaughingMan.prototype.build_letterspan = function(wrap, char, idx) {
+
+  LaughingMan.prototype.build_pointspan = function(wrap, char, idx) {
     var el;
     el = document.createElement("span");
     el.classList.add("w" + idx);
-    el.textContent = char;
+    el.style.backgroundColor = 'red';
+    el.textContent = ' ';
     wrap.appendChild(el);
     return el;
   };
+
+  LaughingMan.prototype.build_letterspan = function(wrap, char, idx) {
+    var el, height;
+    el = document.createElement("span");
+    el.classList.add("w" + idx);
+    el.textContent = char;
+    el.style.borderLeft = '1px solid #f33';
+    el.style.borderBottom = '1px solid #3f3';
+    el.style.color = '#555';
+    el.style.line - (height = 1);
+    el.style.fontSize = '18px';
+    wrap.appendChild(el);
+    return el;
+  };
+
   LaughingMan.prototype.setup_textwrap = function(wrap) {
     var char, idx, txt, _len, _ref;
     txt = "I thought what I'd do was I'd pretend I was one of those deaf-mutes";
@@ -92,6 +116,7 @@ LaughingMan = (function() {
     }
     return wrap;
   };
+
   LaughingMan.prototype.build_element = function(setup, tag, klass) {
     var el;
     el = this.top.getElementsByClassName(klass)[0];
@@ -102,12 +127,14 @@ LaughingMan = (function() {
     }
     return this["setup_" + setup](el);
   };
+
   LaughingMan.prototype.build = function(top) {
     this.top = top;
     this.b = this.build_element('canvas', 'canvas', 'background');
     this.el = this.build_element('textwrap', 'div', 'txtwrap');
     return this.c = this.build_element('canvas', 'canvas', 'foreground');
   };
+
   LaughingMan.prototype.move = function(x, y, r) {
     var w;
     this.top.style.left = x;
@@ -115,14 +142,17 @@ LaughingMan = (function() {
     w = r * 2;
     return w;
   };
+
   function LaughingMan(top) {
     this.setup();
     this.build(top);
-    this.draw_background();
     this.draw_face();
   }
+
   return LaughingMan;
+
 })();
+
 setup_laughingman = function() {
   var el, _i, _len, _ref, _results;
   _ref = document.getElementsByClassName('laughingman');
@@ -133,6 +163,7 @@ setup_laughingman = function() {
   }
   return _results;
 };
+
 if (window.addEventListener) {
   window.addEventListener('load', setup_laughingman, false);
 } else {

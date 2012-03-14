@@ -1,6 +1,6 @@
 body {
   overflow: hidden;
-  background-color: #aaa;
+  background-color: #666;
 }
 
 .lm_background {
@@ -14,15 +14,15 @@ body {
 .lm_foreground, .lm_background {
   overflow: hidden;
   position: absolute;
-  top: 8px;
-  left: 8px;
+  top: 0;
+  left: 0;
 }
 
 .lm_txtwrap {
   position: relative;
   display: block;
-  width: 1078px;
-  height: 902px;
+  width: 700px;
+  height: 700px;
   color: #064d76;
   overflow: hidden;
   -moz-transform-origin: 400px 400px;
@@ -30,7 +30,7 @@ body {
   -webkit-animation: spin 12s infinite linear;
 }
 
-@-moz-keyframes spin {
+@-xmoz-keyframes spin {
   0% {
     -moz-transform: rotate(0deg);
   }
@@ -51,7 +51,6 @@ body {
   font-size: 48px;
   font-weight: bold;
   font-style: normal;
-  line-height: 0.6;
   white-space: pre;
   overflow: visible;
   padding: 0px;

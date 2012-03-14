@@ -75,15 +75,33 @@ class LaughingMan
     @cap.width  = @cap.x_right - @cap.x_left
     @cap.height = @cap.outside - @cap.inside
 
-  setup_canvas: (canvas)->
+  setup_canvas: (canvas) ->
     canvas.width  = 800
     canvas.height = 800
     canvas.getContext "2d"
 
-  build_letterspan: (wrap, char, idx)->
+  build_pointspan: (wrap, char, idx) ->
+    el = document.createElement "span"
+    el.classList.add "w#{idx}"
+    #el.style.width = '2px'
+    #el.style.height = '2px'
+    el.style.backgroundColor = 'red'
+    el.textContent = ' '
+    wrap.appendChild el
+    el
+
+  build_letterspan: (wrap, char, idx) ->
     el = document.createElement "span"
     el.classList.add "w#{idx}"
     el.textContent = char
+    #el.textContent = 'i'
+    #el.style.border = '1px solid #061'
+    el.style.borderLeft = '1px solid #f33'
+    el.style.borderBottom = '1px solid #3f3'
+    el.style.color = '#555'
+    #el.style.color = '#666'
+    el.style.line-height = 1
+    el.style.fontSize = '18px'
     wrap.appendChild el
     el
 
@@ -91,6 +109,7 @@ class LaughingMan
     txt = "I thought what I'd do was I'd pretend I was one of those deaf-mutes"
     for char, idx in txt.split ''
       @build_letterspan wrap, char, idx
+      #@build_pointspan wrap, char, idx
     wrap
 
   build_element: (setup, tag, klass)->
@@ -117,7 +136,7 @@ class LaughingMan
   constructor: (top)->
     @setup()
     @build top
-    @draw_background()
+    #@draw_background()
     @draw_face()
 
 
@@ -129,11 +148,3 @@ if window.addEventListener
   window.addEventListener 'load', setup_laughingman, false
 else
   window.alert 'missing: window.addEventListener'
-
-
-
-
-# Local Variables:
-# pdkl-recompile-on-save: "make rebuild --no-print-directory"
-# pdkl-load-in-firefox-on-save: "laughingman.html"
-# End:
